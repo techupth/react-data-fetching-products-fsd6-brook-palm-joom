@@ -12,11 +12,17 @@ function App() {
     const result = await axios.get("http://localhost:4001/products");
     setProduct(result.data.data);
   };
-  const removeProduct = (productIndex) => {
-    const deleteProduct = [...products];
-    deleteProduct.splice(productIndex, 1);
-    setProduct(deleteProduct);
+
+  const removeProduct = async (id) => {
+    await axios.delete(`http://localhost:4001/products/${id}`);
+    getProducts();
   };
+
+  // const removeProduct = (productIndex) => {
+  //   const deleteProduct = [...products];
+  //   deleteProduct.splice(productIndex, 1);
+  //   setProduct(deleteProduct);
+  // };
 
   return (
     <div className="App">
@@ -42,7 +48,7 @@ function App() {
 
             <button
               className="delete-button"
-              onClick={() => removeProduct(index)}
+              onClick={() => removeProduct(product.id)}
             >
               x
             </button>
